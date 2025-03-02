@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up build environment
-        run: sudo apt-get update && sudo apt-get install -y build-essential
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential
 
       - name: Build the project
         run: |
@@ -38,3 +40,11 @@ jobs:
         with:
           name: bubble-sort-program
           path: bubble_sort.deb
+
+      - name: Notify success
+        if: success()
+        run: echo "Build and tests completed successfully!"
+
+      - name: Notify failure
+        if: failure()
+        run: echo "Build or tests failed. Please check the logs."
