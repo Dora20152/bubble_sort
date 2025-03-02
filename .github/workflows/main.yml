@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - master
-  workflow_dispatch:  # Позволяет ручной запуск
 
 jobs:
   build:
@@ -22,7 +21,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t Dora20152/bubble_sort .
+          docker build -t dora713/bubble_sort .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
@@ -32,7 +31,7 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push Dora20152/bubble_sort
+          docker push dora713/bubble_sort
 
   test:
     runs-on: ubuntu-latest
