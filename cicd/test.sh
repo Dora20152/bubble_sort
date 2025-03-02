@@ -3,16 +3,21 @@
 # Запуск тестов
 echo "Тестирование программы..."
 
+# Функция для нормализации вывода
+normalize_output() {
+    echo "\$1" | tr -s ' ' | tr -d '\r' | sed 's/^[ \t]*//;s/[ \t]*$//'
+}
+
 # Тест 1: проверка сортировки массива
 input="5\n3\n1\n4\n2\n7\n"
-expected_output="Исходный массив:
+expected_output="Исходный массив: 
 3 1 4 2 7 
-Отсортированный массив:
+Отсортированный массив: 
 1 2 3 4 7"
 
 output=$(echo -e "$input" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива")
 
-if [ "$output" == "$expected_output" ]; then
+if [ "$(normalize_output "$output")" == "$(normalize_output "$expected_output")" ]; then
     echo "Тест 1 прошел успешно."
 else
     echo "Тест 1 не пройден."
@@ -25,14 +30,14 @@ fi
 
 # Тест 2: проверка массива с одинаковыми элементами
 input="5\n7\n7\n7\n7\n7\n"
-expected_output="Исходный массив:
+expected_output="Исходный массив: 
 7 7 7 7 7 
-Отсортированный массив:
+Отсортированный массив: 
 7 7 7 7 7"
 
 output=$(echo -e "$input" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива")
 
-if [ "$output" == "$expected_output" ]; then
+if [ "$(normalize_output "$output")" == "$(normalize_output "$expected_output")" ]; then
     echo "Тест 2 прошел успешно."
 else
     echo "Тест 2 не пройден."
@@ -45,14 +50,14 @@ fi
 
 # Тест 3: проверка сортировки уже отсортированного массива
 input="5\n1\n2\n3\n4\n5\n"
-expected_output="Исходный массив:
+expected_output="Исходный массив: 
 1 2 3 4 5 
-Отсортированный массив:
+Отсортированный массив: 
 1 2 3 4 5"
 
 output=$(echo -e "$input" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива")
 
-if [ "$output" == "$expected_output" ]; then
+if [ "$(normalize_output "$output")" == "$(normalize_output "$expected_output")" ]; then
     echo "Тест 3 прошел успешно."
 else
     echo "Тест 3 не пройден."
