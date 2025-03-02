@@ -2,9 +2,9 @@
    FROM ubuntu:latest
 
    # Устанавливаем необходимые зависимости
-   RUN apt-get update && apt-get install -y 
-       wget 
-       && rm -rf /var/lib/apt/lists/*
+   RUN apt-get update && apt-get install -y \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
    # Копируем .deb пакет в образ
    COPY bubble_sort.deb /tmp/
