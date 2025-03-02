@@ -1,14 +1,14 @@
 #!/bin/bash
 
-# Упаковка в deb-пакет
-mkdir -p package/usr/bin
-cp bubble_sort_program package/usr/bin/
+# Создание необходимых директорий
+mkdir -p bubble_sort/DEBIAN
+mkdir -p bubble_sort/usr/bin
 
-# Создание необходимых директорий для deb-пакета
-mkdir -p package/DEBIAN
+# Копирование исполняемого файла
+cp ../bubble_sort_program bubble_sort/usr/bin/
 
-# Создание файла контроля
-cat <<EOF > package/DEBIAN/control
+# Создание файла control
+cat <<EOF > bubble_sort/DEBIAN/control
 Package: bubble-sort-program
 Version: 1.0
 Section: base
@@ -22,4 +22,4 @@ EOF
 dpkg-deb --build bubble_sort
 
 # Удаление временной директории
-rm -rf package
+rm -rf bubble_sort
