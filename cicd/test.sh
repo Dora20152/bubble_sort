@@ -3,37 +3,51 @@
 # Запуск тестов
 echo "Тестирование программы..."
 
-# Функция для выполнения теста
-run_test() {
-    input="$1"
-    expected_output="$2"
-    output_file="$3"
-
-    # Запуск программы с вводом
-    echo -e "$input" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива" > "$output_file"
-
-    # Проверка результата
-    if diff "$output_file" <(echo -e "$expected_output"); then
-        echo "Тест прошел успешно."
-    else
-        echo "Тест не пройден."
-        exit 1
-    fi
-}
-
 # Пример теста: проверка сортировки массива
-run_test "5\n3\n1\n4\n2\n" "Исходный массив: \n1 2 3 4 5 \nОтсортированный массив: \n1 2 3 4 5 \n" "output.txt"
+output=$(echo -e "5\n3\n1\n4\n2\n7\n" | ./bubble_sort_program | grep -E "Исходный массив:|Отсортированный массив:")
+expected_output="Исходный массив: 
+3 1 4 2 7 
+Отсортированный массив: 
+1 2 3 4 7"
+
+if [ "$output" == "$expected_output" ]; then
+    echo "Тест сортировки прошел успешно."
+else
+    echo "Тест сортировки не пройден."
+    exit 1
+fi
 
 # Пример теста: проверка массива с одинаковыми элементами
-run_test "5\n7\n7\n7\n7\n7\n" "Исходный массив: \n7 7 7 7 7 \nОтсортированный массив: \n7 7 7 7 7 \n" "output_duplicates.txt"
+output_duplicates=$(echo -e "5\n7\n7\n7\n7\n7\n" | ./bubble_sort_program | grep -E "Исходный массив:|Отсортированный массив:")
+expected_duplicates="Исходный массив: 
+7 7 7 7 7 
+Отсортированный массив: 
+7 7 7 7 7"
+
+if [ "$output_duplicates" == "$expected_duplicates" ]; then
+    echo "Тест массива с дубликатами прошел успешно."
+else
+    echo "Тест массива с дубликатами не пройден."
+    exit 2
+fi
 
 # Пример теста: проверка сортировки уже отсортированного массива
-run_test "5\n1\n2\n3\n4\n5\n" "Исходный массив: \n1 2 3 4 5 \nОтсортированный массив: \n1 2 3 4 5 \n" "output_sorted.txt"
+output_sorted=$(echo -e "5\n1\n2\n3\n4\n5\n" | ./bubble_sort_program | grep -E "Исходный массив:|Отсортированный массив:")
+expected_sorted="Исходный массив: 
+1 2 3 4 5 
+Отсортированный массив: 
+1 2 3 4 5"
+
+if [ "$output_sorted" == "$expected_sorted" ]; then
+    echo "Тест уже отсортированного массива прошел успешно."
+else
+    echo "Тест уже отсортированного массива не пройден."
+    exit 3
+fi
 
 # Пример теста: проверка некорректного ввода (нецелое число)
-echo -e "5\na\n1\n2\n3\n4\n5\n" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива" > output_invalid_input.txt
-
-if grep -q "Ошибка: введите целое число." output_invalid_input.txt; then
+output_invalid=$(echo -e "5\na\n1\n2\n3\n4\n5\n" | ./bubble_sort_program)
+if echo "$output_invalid" | grep -q "Ошибка: введите целое число."; then
     echo "Тест некорректного ввода прошел успешно."
 else
     echo "Тест некорректного ввода не пройден."
@@ -41,13 +55,12 @@ else
 fi
 
 # Пример теста: проверка превышения максимального размера массива
-echo -e "105\n1\n2\n3\n4\n5\n" | ./bubble_sort_program | grep -v "Введите количество элементов" | grep -v "Введите элементы массива" > output_large_input.txt
-
-if grep -q "Ошибка: введите корректное положительное число (1-100)." output_large_input.txt; then
+output_max_size=$(echo -e "105\n1\n2\n3\n4\n5\n" | ./bubble_sort_program)
+if echo "$output_max_size" | grep -q "Ошибка: введите корректное положительное число (1-100)."; then
     echo "Тест превышения максимального размера массива прошел успешно."
 else
     echo "Тест превышения максимального размера массива не пройден."
-    exit 6
+    exit 5
 fi
 
 # Вывод итогового результата
