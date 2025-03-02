@@ -1,7 +1,0 @@
-Package: bubble-sort-program
-Version: 1.0
-Section: utils
-Priority: optional
-Architecture: amd64
-Depends: gcc, make 
-Description: Программа для сортировки массива с помощью пузырьковой сортировки
