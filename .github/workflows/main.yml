@@ -34,7 +34,7 @@ jobs:
           ./cicd/package.sh
 
       - name: Upload .deb package
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Обновлено до v3
         with:
           name: bubble-sort-program
-          path: bubble_sort.deb  
+          path: bubble_sort.deb
