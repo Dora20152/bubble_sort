@@ -42,4 +42,4 @@ jobs:
 
       - name: Run tests
         run: |
-          ./cicd/test.sh  # Замените на вашу команду тестирования
+          cicd/test.sh  
