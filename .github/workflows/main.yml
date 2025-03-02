@@ -3,10 +3,10 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - master  # Запускается при пуше в ветку main
+      - master
   pull_request:
     branches:
-      - master  # Запускается при создании PR в ветку main
+      - master
 
 jobs:
   build:
@@ -26,8 +26,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.Dora20152}}
-          password: ${{ secrets.dckr_pat_P47Ye3be341hFw-luqkLhdxTu3c }}
+          username: ${{ secrets.DOCKER_USERNAME }}  # Используйте имя секрета для имени пользователя
+          password: ${{ secrets.DOCKER_PASSWORD }}   # Используйте имя секрета для пароля
 
       - name: Push Docker image
         run: |
@@ -40,5 +40,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run tests
+      - name: Make test script executable
         run: chmod +x ./cicd/test.sh
+
+      - name: Run tests
+        run: |
+          ./cicd/test.sh
