@@ -19,9 +19,9 @@ fi
 
 # Пример теста: проверка массива с одинаковыми элементами
 output_duplicates=$(echo -e "5\n7\n7\n7\n7\n7\n" | ./bubble_sort_program | grep -E "Исходный массив:|Отсортированный массив:")
-expected_duplicates="Исходный массив: 
+expected_duplicates="Исходный массив:
 7 7 7 7 7 
-Отсортированный массив: 
+Отсортированный массив:
 7 7 7 7 7"
 
 if [ "$output_duplicates" == "$expected_duplicates" ]; then
