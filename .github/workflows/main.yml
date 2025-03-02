@@ -16,20 +16,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build Docker image
+      - name: Set up build environment
         run: |
-          docker build -t my-image .
+          sudo apt-get update
+          sudo apt-get install -y build-essential
 
-      - name: Run Docker container
+      - name: Build the project
         run: |
-          docker run --name my-container my-image
+          make
 
-      - name: Check if container is running
-        if: success() # Этот шаг выполнится только если предыдущий шаг был успешным
+      - name: Run tests
         run: |
-          echo "Container is running successfully."
+          chmod +x cicd/test.sh
+          ./cicd/test.sh
 
-      - name: Handle failure
-        if: failure() # Этот шаг выполнится только если предыдущий шаг завершился с ошибкой
+      - name: Package into .deb
         run: |
-          echo "Error occurred while running the container."
+          chmod +x cicd/package.sh
+          ./cicd/package.sh
+
+      - name: Upload .deb package
+        uses: actions/upload-artifact@v4  
+        with:
+          name: bubble-sort-program
+          path: bubble_sort.deb
+
+      - name: Notify success
+        if: success()
+        run: echo "Build and tests completed successfully!"
+
+      - name: Notify failure
+        if: failure()
+        run: echo "Build or tests failed. Please check the logs."
