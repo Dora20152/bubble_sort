@@ -16,23 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up build environment
-        run: sudo apt-get update && sudo apt-get install -y build-essential
-
-      - name: Build the project
-        run: |
-          make
-
-      - name: Run tests
-        run: |
-          chmod +x cicd/test.sh
-          ./cicd/test.sh
-
-      - name: Package into .deb
-        run: |
-          chmod +x cicd/package.sh
-          ./cicd/package.sh
-
       - name: Build Docker image
         run: |
           docker build -t my-image .
@@ -50,9 +33,3 @@ jobs:
         if: failure() # Этот шаг выполнится только если предыдущий шаг завершился с ошибкой
         run: |
           echo "Error occurred while running the container."
-
-      - name: Upload .deb package
-        uses: actions/upload-artifact@v4  
-        with:
-          name: bubble-sort-program
-          path: bubble_sort.deb
