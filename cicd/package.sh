@@ -5,7 +5,7 @@ mkdir -p bubble_sort/DEBIAN
 mkdir -p bubble_sort/usr/bin
 
 # Копирование исполняемого файла
-cp path/to/your/bubble_sort_program bubble_sort/usr/bin/
+cp ../bubble_sort_program bubble_sort/usr/bin/
 
 # Создание файла control
 cat <<EOF > bubble_sort/DEBIAN/control
