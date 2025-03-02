@@ -41,5 +41,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run tests
-        run: |
-          cicd/test.sh  
+        run: chmod +x ./cicd/test.sh
