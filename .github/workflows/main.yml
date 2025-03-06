@@ -51,7 +51,7 @@ jobs:
 
     steps:
       - name: Package into .deb
-        run: |
+        run: 
           chmod +x cicd/package.sh
           ./cicd/package.sh
 
