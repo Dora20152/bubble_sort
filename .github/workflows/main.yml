@@ -48,18 +48,21 @@ jobs:
 
   package:
     runs-on: ubuntu-latest
+    needs: [build, test] 
 
     steps:
-      - name: Package into .deb
-        run: 
-          chmod +x cicd/package.sh
-          ./cicd/package.sh
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Upload .deb package
-        uses: actions/upload-artifact@v4  
-        with:
-          name: bubble-sort-program
-          path: bubble_sort.deb
+    - name: List files in cicd directory
+      run: ls -la cicd
+
+    - name: Make package script executable
+      run: chmod +x cicd/package.sh
+
+    - name: Run package script
+      run: ./cicd/package.sh
+
 
   deploy:
     runs-on: ubuntu-latest
